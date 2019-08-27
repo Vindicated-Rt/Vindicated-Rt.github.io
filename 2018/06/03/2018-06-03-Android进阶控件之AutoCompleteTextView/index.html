@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Android之路—初章前两个星期没有更新博客,是与小伙伴合作了一个小实战,在最后几天为了参加学校的比赛,所以有些小忙,不过获得了二等奖,还是很开心的,这里做下一篇博客的预告,放出这个实战项目的GitHub链接 东篱一隅 今天要说的是自动完成文本显示框。（AutoCompleteTextView） AutoCompleteTextView是什么打开谷歌官方文档： public class Auto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android进阶控件之AutoCompleteTextView">
+<meta property="og:url" content="http://yoursite.com/2018/06/03/2018-06-03-Android进阶控件之AutoCompleteTextView/index.html">
+<meta property="og:site_name" content="Vindicated">
+<meta property="og:description" content="Android之路—初章前两个星期没有更新博客,是与小伙伴合作了一个小实战,在最后几天为了参加学校的比赛,所以有些小忙,不过获得了二等奖,还是很开心的,这里做下一篇博客的预告,放出这个实战项目的GitHub链接 东篱一隅 今天要说的是自动完成文本显示框。（AutoCompleteTextView） AutoCompleteTextView是什么打开谷歌官方文档： public class Auto">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://i.loli.net/2018/06/03/5b13f39dd001e.png">
+<meta property="og:image" content="https://i.loli.net/2018/06/03/5b1402bc24eea.gif">
+<meta property="og:updated_time" content="2019-08-27T16:10:33.489Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android进阶控件之AutoCompleteTextView">
+<meta name="twitter:description" content="Android之路—初章前两个星期没有更新博客,是与小伙伴合作了一个小实战,在最后几天为了参加学校的比赛,所以有些小忙,不过获得了二等奖,还是很开心的,这里做下一篇博客的预告,放出这个实战项目的GitHub链接 东篱一隅 今天要说的是自动完成文本显示框。（AutoCompleteTextView） AutoCompleteTextView是什么打开谷歌官方文档： public class Auto">
+<meta name="twitter:image" content="https://i.loli.net/2018/06/03/5b13f39dd001e.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/03/2018-06-03-Android进阶控件之AutoCompleteTextView/">
+
+
+
+
+
+  <title>Android进阶控件之AutoCompleteTextView | Vindicated</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/vindicated-rt" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vindicated</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/03/2018-06-03-Android进阶控件之AutoCompleteTextView/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vindicated-rt">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.ax1x.com/2019/08/27/momXi6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vindicated">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android进阶控件之AutoCompleteTextView</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-03T00:00:00+08:00">
+                2018-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Android之路—初章"><a href="#Android之路—初章" class="headerlink" title="Android之路—初章"></a>Android之路—初章</h1><p>前两个星期没有更新博客,是与小伙伴合作了一个小实战,在最后几天为了参加学校的比赛,所以有些小忙,不过获得了二等奖,还是很开心的,这里做下一篇博客的预告,放出这个实战项目的GitHub链接 <a href="https://github.com/Vindicated-Rt/AViewOfTori" target="_blank" rel="noopener">东篱一隅</a></p>
+<p>今天要说的是自动完成文本显示框。（AutoCompleteTextView）</p>
+<h2 id="AutoCompleteTextView是什么"><a href="#AutoCompleteTextView是什么" class="headerlink" title="AutoCompleteTextView是什么"></a>AutoCompleteTextView是什么</h2><p>打开谷歌官方文档：</p>
+<p><strong>public class AutoCompleteTextView extends EditText implements Filter.FilterListener</strong></p>
+<p>java.lang.Object</p>
+<p>  ↳ android.view.View</p>
+<p>     ↳ android.widget.TextView</p>
+<p>        ↳ android.widget.EditText</p>
+<p>           ↳ android.widget.AutoCompleteTextView</p>
+<p>AutoCompleteTextView是继承自EditText,说明它也是可以编辑的文本显示控件,只是添加了一个功能:可以根据输入的部分文本,匹配对应的内容,如果点击匹配的内容,可以补全想要的完整文本。</p>
+<p>就如同浏览器的搜索框</p>
+<p><a href="https://i.loli.net/2018/06/03/5b13f39dd001e.png" target="_blank" rel="noopener"><img src="https://i.loli.net/2018/06/03/5b13f39dd001e.png" alt="谷歌浏览器"></a></p>
+<p>当然,Google的搜索框还有自动匹配搜索内容的功能。</p>
+<h2 id="控件常用属性"><a href="#控件常用属性" class="headerlink" title="控件常用属性"></a>控件常用属性</h2><table>
+<thead>
+<tr>
+<th align="left">属性</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">android:completionHint</td>
+<td align="left">设置出现在下拉列表底部的提示信息</td>
+</tr>
+<tr>
+<td align="left">android:completionThreshold</td>
+<td align="left">设置触发补全提示信息的最小字符个数</td>
+</tr>
+<tr>
+<td align="left">android:dropDownHorizontalOffset</td>
+<td align="left">设置下拉菜单于文本框之间的水平偏移量</td>
+</tr>
+<tr>
+<td align="left">android:dropDownHeight</td>
+<td align="left">设置下拉菜单的高度</td>
+</tr>
+<tr>
+<td align="left">android:dropDownWidth</td>
+<td align="left">设置下拉菜单的宽度</td>
+</tr>
+<tr>
+<td align="left">android:singleLine</td>
+<td align="left">设置是否单行显示文本内容</td>
+</tr>
+<tr>
+<td align="left">android:dropDownVerticalOffse</td>
+<td align="left">设置下拉菜单于文本框之间的垂直偏移量</td>
+</tr>
+</tbody></table>
+<h2 id="简单使用AutoCompleteTextView"><a href="#简单使用AutoCompleteTextView" class="headerlink" title="简单使用AutoCompleteTextView"></a>简单使用AutoCompleteTextView</h2><p>按理说使用AutoCompleteTextView应该是配合相关数据进行搜索的使用,那在之后的搜索引擎篇可以再次深入使用,在次使用简单的数组适配器来存放简单的匹配数据。</p>
+<h3 id="添加控件-设置相关属性"><a href="#添加控件-设置相关属性" class="headerlink" title="添加控件(设置相关属性)"></a>添加控件(设置相关属性)</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">AutoCompleteTextView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/at"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:completionHint</span>=<span class="string">"无更多匹配内容"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:completionThreshold</span>=<span class="string">"1"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:hint</span>=<span class="string">"请输入关键字"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在下拉匹配列表底部设置内容:无更多匹配内容,最小触发字符个数:1。</p>
+<h3 id="设置适配器-初始化数据"><a href="#设置适配器-初始化数据" class="headerlink" title="设置适配器(初始化数据)"></a>设置适配器(初始化数据)</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.lenovo.autocompletetextview_demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.support.v7.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.widget.ArrayAdapter;</span><br><span class="line"><span class="keyword">import</span> android.widget.AutoCompleteTextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.at);</span><br><span class="line">        String str[] = &#123;<span class="string">"a"</span>,<span class="string">"ab"</span>,<span class="string">"abc"</span>,<span class="string">"abcd"</span>,<span class="string">"abcde"</span>,<span class="string">"abcdef"</span>,<span class="string">"abcdefg"</span>,<span class="string">"abcdefgh"</span>&#125;;</span><br><span class="line">        ArrayAdapter&lt;String&gt; arrayAdapter = <span class="keyword">new</span> ArrayAdapter&lt;String&gt;														(<span class="keyword">this</span>,android.R.layout.simple_list_item_1,str);</span><br><span class="line">        autoCompleteTextView.setAdapter(arrayAdapter);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>简单介绍ArrayAdapter,数组适配器,T表示是数组类型,它有很多重载,这里用到的是</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ArrayAdapter</span><span class="params">(Context context,<span class="keyword">int</span> resource, T[] objects)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(context, resource, <span class="number">0</span>, Arrays.asList(objects));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>三个参数:上下文,适配布局id,适配数据数组。其中上下文是this当前Activity,数据是初始化的字符串数组。</p>
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><a href="https://i.loli.net/2018/06/03/5b1402bc24eea.gif" target="_blank" rel="noopener"><img src="https://i.loli.net/2018/06/03/5b1402bc24eea.gif" alt="demo"></a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/14/2018-05-14-Android进阶控件之ToolBar/" rel="next" title="Android进阶控件之ToolBar">
+                <i class="fa fa-chevron-left"></i> Android进阶控件之ToolBar
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/10/2018-06-10-Android项目之东篱一隅/" rel="prev" title="Android项目之东篱一隅">
+                Android项目之东篱一隅 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjkyNC8xOTQ3MA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s2.ax1x.com/2019/08/27/momXi6.jpg" alt="vindicated-rt">
+            
+              <p class="site-author-name" itemprop="name">vindicated-rt</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/vindicated-rt" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android之路—初章"><span class="nav-number">1.</span> <span class="nav-text">Android之路—初章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AutoCompleteTextView是什么"><span class="nav-number">1.1.</span> <span class="nav-text">AutoCompleteTextView是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控件常用属性"><span class="nav-number">1.2.</span> <span class="nav-text">控件常用属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单使用AutoCompleteTextView"><span class="nav-number">1.3.</span> <span class="nav-text">简单使用AutoCompleteTextView</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加控件-设置相关属性"><span class="nav-number">1.3.1.</span> <span class="nav-text">添加控件(设置相关属性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置适配器-初始化数据"><span class="nav-number">1.3.2.</span> <span class="nav-text">设置适配器(初始化数据)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果图"><span class="nav-number">1.4.</span> <span class="nav-text">效果图</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vindicated-rt</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
