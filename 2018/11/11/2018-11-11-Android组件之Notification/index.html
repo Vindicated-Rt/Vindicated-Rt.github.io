@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Android之路—初章Android的版本已经更新到Pie了,今日记录一个在Android O之后更新的需要重写的通知Notification 手机通知手机最上一栏,就是状态栏,很多应用的通知就显示在这里,当用户下拉状态栏后,就能显示这些通知. Notification,就是构建这种通知的一个类. java.lang.Object   ↳ android.app.Notification 用No">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android组件之Notification">
+<meta property="og:url" content="http://yoursite.com/2018/11/11/2018-11-11-Android组件之Notification/index.html">
+<meta property="og:site_name" content="Vindicated">
+<meta property="og:description" content="Android之路—初章Android的版本已经更新到Pie了,今日记录一个在Android O之后更新的需要重写的通知Notification 手机通知手机最上一栏,就是状态栏,很多应用的通知就显示在这里,当用户下拉状态栏后,就能显示这些通知. Notification,就是构建这种通知的一个类. java.lang.Object   ↳ android.app.Notification 用No">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-27T16:14:47.505Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android组件之Notification">
+<meta name="twitter:description" content="Android之路—初章Android的版本已经更新到Pie了,今日记录一个在Android O之后更新的需要重写的通知Notification 手机通知手机最上一栏,就是状态栏,很多应用的通知就显示在这里,当用户下拉状态栏后,就能显示这些通知. Notification,就是构建这种通知的一个类. java.lang.Object   ↳ android.app.Notification 用No">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/11/2018-11-11-Android组件之Notification/">
+
+
+
+
+
+  <title>Android组件之Notification | Vindicated</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/vindicated-rt" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Vindicated</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/2018-11-11-Android组件之Notification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="vindicated-rt">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.ax1x.com/2019/08/27/momXi6.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Vindicated">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android组件之Notification</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-11T00:00:00+08:00">
+                2018-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Android之路—初章"><a href="#Android之路—初章" class="headerlink" title="Android之路—初章"></a>Android之路—初章</h1><p>Android的版本已经更新到Pie了,今日记录一个在Android O之后更新的需要重写的通知Notification</p>
+<h2 id="手机通知"><a href="#手机通知" class="headerlink" title="手机通知"></a>手机通知</h2><p>手机最上一栏,就是状态栏,很多应用的通知就显示在这里,当用户下拉状态栏后,就能显示这些通知.</p>
+<p>Notification,就是构建这种通知的一个类.</p>
+<p>java.lang.Object</p>
+<p>  ↳ android.app.Notification</p>
+<h3 id="用Notification-NotificationManager发送通知"><a href="#用Notification-NotificationManager发送通知" class="headerlink" title="用Notification + NotificationManager发送通知"></a>用Notification + NotificationManager发送通知</h3><p>写一个demo,主页面两个按钮:一个发送通知,一个取消通知</p>
+<p>一个Notification 需要 NotificationManager 来管理,所以需要创建这样的对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> NotificationManager manager;</span><br><span class="line">manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</span><br></pre></td></tr></table></figure>
+
+<p>这个管理者对象取得系统的服务中的通知管理服务.</p>
+<p>在点击通知时,通常是能跳转到一些界面的,这就需要创建跳转的Intent</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(<span class="keyword">this</span>, MainActivity.class);</span><br><span class="line">PendingIntent pendingIntent = PendingIntent.getActivity(<span class="keyword">this</span>, <span class="number">0</span>, intent, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里的Intent是跳转到主页面的一个连接,PendingIntent是一个比intent更先进的一个类,它必须满足一些条件,才能触发作为它的参数的Intent.</p>
+<p>其中PendingIntent的getActivity方法中参数分别是</p>
+<ol>
+<li>Context context 上下文</li>
+<li>int requestCode 请求码,每次requestcode不同,就能产生多个Pendingintent.</li>
+<li>Intent intent 触发的Intent</li>
+<li>int flags 对不同操作作标识</li>
+</ol>
+<p>然后创建通知的对象,其中 <strong>一定要设置图标</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Notification notification = <span class="keyword">new</span> Notification.Builder(getApplicationContext())</span><br><span class="line">        .setSmallIcon(R.mipmap.ic_launcher)     <span class="comment">//必须设置图标,通知才能显示</span></span><br><span class="line">        .setTicker(<span class="string">"have a good day"</span>)           <span class="comment">//设置通知栏通知语句</span></span><br><span class="line">        .setWhen(System.currentTimeMillis())    <span class="comment">//设置通知栏时间</span></span><br><span class="line">        .setContentTitle(<span class="string">"美好的一天"</span>)           <span class="comment">//设置通知栏显示标题</span></span><br><span class="line">        .setContentText(<span class="string">"来之app的问候"</span>)         <span class="comment">//设置通知栏显示文本</span></span><br><span class="line">        .setContentIntent(pendingIntent)        <span class="comment">//设置通知栏跳转页面</span></span><br><span class="line">    	.setAutoCancel(<span class="keyword">true</span>)                    <span class="comment">//通知自动的消失</span></span><br><span class="line">        .build();                               <span class="comment">//创建通知栏</span></span><br></pre></td></tr></table></figure>
+
+<p>最后用管理对象来通知系统发送通知即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">manager.notify(<span class="number">1</span>, notification);</span><br></pre></td></tr></table></figure>
+
+<p>其中,第一个参数是通知的ID,开发者自己设定为全局标识即可.</p>
+<h2 id="Android-O-更新特新"><a href="#Android-O-更新特新" class="headerlink" title="Android O 更新特新"></a>Android O 更新特新</h2><p>上面demo在Android O 之前的版本手机上可以运行,但是在Android O 以上的手机却无法显示通知.</p>
+<p>这是因为在Android O 更新之后, Notification的发送,需要选择发送的渠道,才可以通过NotificationManager发送.</p>
+<p>所以就要创建渠道类NotificationChannel</p>
+<h3 id="NotificationChannel"><a href="#NotificationChannel" class="headerlink" title="NotificationChannel"></a>NotificationChannel</h3><p>创建NotificationChannel对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.O) &#123;</span><br><span class="line">            NotificationChannel channel = <span class="keyword">new</span> NotificationChannel(id,name,NotificationManager.IMPORTANCE_MIN);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>三个参数:</p>
+<ol>
+<li>channelId 通知渠道的ID 可以是任意的字符串，开发者设置的全局变量</li>
+<li>channelName 通知渠道的名称，这个是用户可见的，开发者需要认真规划的命名</li>
+<li>importance 通知渠道的重要等级，有以下几个等级，不过这个用户都是可以手动修改的</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">用户可见级别</th>
+<th align="left">重要性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">发出声音且显示为提醒通知</td>
+<td align="left">IMPORTANCE_HIGH</td>
+</tr>
+<tr>
+<td align="left">发出声音</td>
+<td align="left">IMPORTANCE_DEFAULT</td>
+</tr>
+<tr>
+<td align="left">没有声音</td>
+<td align="left">IMPORTANCE_LOW</td>
+</tr>
+<tr>
+<td align="left">无声且不显示在通知栏</td>
+<td align="left">IMPORTANCE_MIN</td>
+</tr>
+</tbody></table>
+<p>同时,channel有很多设置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">setLightColor();<span class="comment">//设置通知灯使用的颜色</span></span><br><span class="line">setSound();<span class="comment">//提供一个Uri，用于在通知发布到此频道时播放声音</span></span><br><span class="line">setGroup();<span class="comment">//设置通知分配到的组</span></span><br><span class="line">setBypassDnd();<span class="comment">//设置通知是否应绕过“请勿打扰”模式(中断_筛选器_优先级值)</span></span><br><span class="line">setLockScreenVisibility();<span class="comment">//设置是否应在锁定屏幕上显示来自此通道的通知</span></span><br></pre></td></tr></table></figure>
+
+<p>设置好渠道参数之后,通知管理对象调用方法,创造这个渠道</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">manager.createNotificationChannel(channel);</span><br><span class="line">Notification notification = <span class="keyword">new</span> Notification.Builder(getApplicationContext(), id)</span><br><span class="line">             .setSmallIcon(R.mipmap.ic_launcher)     <span class="comment">//必须设置图标,通知才能显示</span></span><br><span class="line">             .setTicker(<span class="string">"have a good day"</span>)           <span class="comment">//设置通知栏通知语句</span></span><br><span class="line">             .setWhen(System.currentTimeMillis())    <span class="comment">//设置通知栏时间</span></span><br><span class="line">             .setContentTitle(<span class="string">"美好的一天"</span>)           <span class="comment">//设置通知栏显示标题</span></span><br><span class="line">             .setContentText(<span class="string">"来之app的问候"</span>)         <span class="comment">//设置通知栏显示文本</span></span><br><span class="line">             .setContentIntent(pendingIntent)        <span class="comment">//设置通知栏跳转页面</span></span><br><span class="line">             .setAutoCancel(<span class="keyword">true</span>)                    <span class="comment">//设置通知栏渠道</span></span><br><span class="line">             .build();                               <span class="comment">//创建通知栏</span></span><br></pre></td></tr></table></figure>
+
+<p>不同于之前的方法,添加参数,对应相应的渠道.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/12/2018-09-12-Android进阶控件之ViewPager(2)/" rel="next" title="Android进阶控件之ViewPager(2)">
+                <i class="fa fa-chevron-left"></i> Android进阶控件之ViewPager(2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/17/2018-11-17-Android之图像处理/" rel="prev" title="Android之图像处理">
+                Android之图像处理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjkyNC8xOTQ3MA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s2.ax1x.com/2019/08/27/momXi6.jpg" alt="vindicated-rt">
+            
+              <p class="site-author-name" itemprop="name">vindicated-rt</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/vindicated-rt" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android之路—初章"><span class="nav-number">1.</span> <span class="nav-text">Android之路—初章</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#手机通知"><span class="nav-number">1.1.</span> <span class="nav-text">手机通知</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用Notification-NotificationManager发送通知"><span class="nav-number">1.1.1.</span> <span class="nav-text">用Notification + NotificationManager发送通知</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-O-更新特新"><span class="nav-number">1.2.</span> <span class="nav-text">Android O 更新特新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NotificationChannel"><span class="nav-number">1.2.1.</span> <span class="nav-text">NotificationChannel</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_uv">
+    本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">vindicated-rt</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
