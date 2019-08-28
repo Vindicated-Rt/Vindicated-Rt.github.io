@@ -808,6 +808,28 @@
 
 
 
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'kn9MDbUv8p94w2ssCW1NGzsc-gzGzoHsz',
+        appKey: 'O4h0Fnckixv2lFIhcf4QWXN6',
+        placeholder: 'Just go go',
+        avatar:'https://s2.ax1x.com/2019/08/27/momXi6.jpg',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
 
 
   
